@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Patrick’s Animated Showcase</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    iframe {
+      position: absolute;
+      width: 105%;
+      height: 105%;
+      border: none;
+      z-index: 1;
+      transform-origin: center center;
+      top: calc(50% + 30px);
+      left: calc(50% + 0px);
+      transform: translate(-50%, -50%) scale(1.95);
+      visibility: hidden;
+    }
+
+    iframe.active {
+      visibility: visible;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      pointer-events: none;
+      background: transparent;
+      display: block;
+    }
+
+    .floating-text {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 3em;
+      color: #000;
+      font-family: 'Arial Black', sans-serif;
+      opacity: 0;
+      z-index: 5;
+      text-shadow: 0 0 10px #fff, 0 0 20px #0ff, 0 0 30px #0ff;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    .floating-text.active {
+      opacity: 1;
+      animation: float 3s ease-in-out infinite, pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0%   { transform: translateX(-50%) translateY(0); }
+      50%  { transform: translateX(-50%) translateY(-10px); }
+      100% { transform: translateX(-50%) translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%   { text-shadow: 0 0 10px #fff, 0 0 20px #0ff; }
+      50%  { text-shadow: 0 0 20px #fff, 0 0 40px #0ff; }
+      100% { text-shadow: 0 0 10px #fff, 0 0 20px #0ff; }
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <!-- Watch Faces -->
+    <iframe class="active" src="https://www.facer.io/w/zs6pDpzmRW/showcase?prev=~2Fwatchface~2Fzs6pDpzmRW&watchModel=fossilqmarshal"></iframe>
+    <iframe src="https://www.facer.io/w/JsydeiEkmy/showcase?prev=~2Fwatchface~2FJsydeiEkmy&watchModel=gw5prodark"></iframe>
+    <iframe src="https://www.facer.io/w/S2Z9tfbuh8/showcase?prev=~2Fwatchface~2FS2Z9tfbuh8&watchModel=fossilqmarshal"></iframe>
+    <iframe src="https://www.facer.io/w/RsnQzFDYgg/showcase?prev=~2Fwatchface~2FRsnQzFDYgg&watchModel=fossilqmarshal"></iframe>
+    <iframe src="https://www.facer.io/w/02SyoSaxx9/showcase?prev=~2Fwatchface~2F02SyoSaxx9&watchModel=zenwatch3"></iframe>
+
+    <!-- Floating Texts -->
+    <div class="floating-text active">W E L C O M E</div>
+    <div class="floating-text">TO THIS WORLD</div>
+    <div class="floating-text">OF A N I M A T E D F A C E S</div>
+
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <script>
+    (function() {
+      const maskScaleMult = 1.45;
+      const maskOffsetX   = 0;
+      const maskOffsetY   = 0;
+
+      const canvas = document.getElementById('canvas'),
+            ctx    = canvas.getContext('2d'),
+            img    = new Image();
+
+      img.src = 'mask.png';
+
+      function resizeCanvas() {
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+        drawMask();
+      }
+
+      function drawMask() {
+        if (!img.complete) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        let scale = Math.min(
+          canvas.width  / img.width,
+          canvas.height / img.height
+        ) * maskScaleMult;
+
+        const w = img.width  * scale,
+              h = img.height * scale,
+              x = (canvas.width  - w) / 2 + maskOffsetX,
+              y = (canvas.height - h) / 2 + maskOffsetY;
+
+        ctx.imageSmoothingEnabled = true;
+        ctx.drawImage(img, x, y, w, h);
+      }
+
+      img.onload = resizeCanvas;
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      // Rotation logic
+      const iframes = document.querySelectorAll('iframe');
+      const texts = document.querySelectorAll('.floating-text');
+      let current = 0;
+
+      setInterval(() => {
+        iframes[current].classList.remove('active');
+        if (texts[current]) texts[current].classList.remove('active');
+
+        current = (current + 1) % iframes.length;
+
+        iframes[current].classList.add('active');
+        if (texts[current]) {
+          texts[current].classList.add('active');
+          setTimeout(() => {
+            texts[current].classList.remove('active');
+          }, 8000); // show text for first 8 seconds
+        }
+      }, 20000); // rotate every 20 seconds
+    })();
+  </script>
+</body>
+</html>
