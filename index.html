@@ -5,11 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Patrick’s Animated Showcase</title>
   <style>
-    :root {
-      --left-offset: 100px;
-      --right-offset: 100px;
-    }
-
     html, body {
       margin: 0;
       padding: 0;
@@ -57,14 +52,20 @@
 
     .floating-text {
       position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
       color: black;
       opacity: 0;
       z-index: 5;
       letter-spacing: 0.4em;
       text-shadow: 0 0 10px #fff, 0 0 20px #0ff, 0 0 30px #0ff;
       white-space: nowrap;
+
+      /* variable-driven properties with fallbacks */
+      font-size: var(--font-size, 2em);
+      top:       var(--top,      50%);
+      left:      var(--left,     auto);
+      right:     var(--right,    auto);
+      text-align: var(--align,   center);
+      transform: rotate(var(--angle, 270deg)) translateY(-50%);
     }
 
     .floating-text.active {
@@ -72,31 +73,13 @@
       animation: bounce 1.5s infinite ease-in-out, glow 2s infinite ease-in-out;
     }
 
-    .floating-text.left {
-      left: var(--left-offset);
-      --angle: 270deg;
-      transform: rotate(var(--angle)) translateY(-50%);
-      text-align: right;
-    }
-
-    .floating-text.right {
-      right: var(--right-offset);
-      --angle: 90deg;
-      transform: rotate(var(--angle)) translateY(-50%);
-      text-align: left;
-    }
-
-    .floating-text.big {
-      font-size: 3em;
-    }
-
-    .floating-text:not(.big) {
-      font-size: 1.5em;
-    }
-
     @keyframes bounce {
-      0%, 100% { transform: rotate(var(--angle)) translateY(-50%) translateY(0); }
-      50%      { transform: rotate(var(--angle)) translateY(-50%) translateY(-10px); }
+      0%, 100% {
+        transform: rotate(var(--angle, 270deg)) translateY(-50%) translateY(0);
+      }
+      50% {
+        transform: rotate(var(--angle, 270deg)) translateY(-50%) translateY(-10px);
+      }
     }
 
     @keyframes glow {
@@ -116,13 +99,40 @@
     <iframe src="https://www.facer.io/w/02SyoSaxx9/showcase?watchModel=zenwatch3"></iframe>
 
     <!-- Floating Texts -->
-    <div class="floating-text left big">W E L C O M E</div>                     <!-- 0 -->
-    <div class="floating-text right big">T O     T H I S     W O R L D</div>   <!-- 1 -->
-    <div class="floating-text left">O F   A N I M A T E D</div>                <!-- 2 -->
-    <div class="floating-text right big">F A C E S</div>                       <!-- 3 -->
-    <div class="floating-text left big">F O L L O W   M E</div>                <!-- 4 -->
-    <div class="floating-text left big">B E A U T Y</div>                      <!-- 5 -->
-    <div class="floating-text right big">C H A S E R</div>                     <!-- 6 -->
+    <div class="floating-text"
+         style="--font-size: 3em; --left: 100px; --top: 30%; --angle: 270deg; --align: right;">
+      W E L C O M E
+    </div>
+
+    <div class="floating-text"
+         style="--font-size: 3em; --right: 100px; --top: 30%; --angle: 90deg; --align: left;">
+      T O     T H I S     W O R L D
+    </div>
+
+    <div class="floating-text"
+         style="--font-size: 1.5em; --left: 120px; --top: 50%; --angle: 270deg; --align: right;">
+      O F   A N I M A T E D
+    </div>
+
+    <div class="floating-text"
+         style="--font-size: 3em; --right: 120px; --top: 50%; --angle: 90deg; --align: left;">
+      F A C E S
+    </div>
+
+    <div class="floating-text"
+         style="--font-size: 3em; --left: 140px; --top: 70%; --angle: 270deg; --align: right;">
+      F O L L O W   M E
+    </div>
+
+    <div class="floating-text"
+         style="--font-size: 3em; --left: 160px; --top: 80%; --angle: 270deg; --align: right;">
+      B E A U T Y
+    </div>
+
+    <div class="floating-text"
+         style="--font-size: 3em; --right: 140px; --top: 80%; --angle: 90deg; --align: left;">
+      C H A S E R
+    </div>
 
     <canvas id="canvas"></canvas>
   </div>
@@ -133,7 +143,7 @@
             ctx    = canvas.getContext('2d'),
             img    = new Image();
 
-      img.src = 'mask.png'; // Make sure this image exists in your project
+      img.src = 'mask.png'; // ensure mask.png is in your project root
 
       function resizeCanvas() {
         canvas.width  = window.innerWidth;
@@ -145,11 +155,11 @@
         if (!img.complete) return;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        let scale = Math.min(canvas.width / img.width, canvas.height / img.height) * 1.45;
-        const w = img.width * scale,
-              h = img.height * scale,
-              x = (canvas.width - w) / 2,
-              y = (canvas.height - h) / 2;
+        const scale = Math.min(canvas.width / img.width, canvas.height / img.height) * 1.45,
+              w     = img.width  * scale,
+              h     = img.height * scale,
+              x     = (canvas.width  - w) / 2,
+              y     = (canvas.height - h) / 2;
 
         ctx.imageSmoothingEnabled = true;
         ctx.drawImage(img, x, y, w, h);
@@ -160,8 +170,8 @@
       resizeCanvas();
 
       const iframes = document.querySelectorAll('iframe');
-      const texts = document.querySelectorAll('.floating-text');
-      let current = 0;
+      const texts   = document.querySelectorAll('.floating-text');
+      let current   = 0;
 
       function clearText() {
         texts.forEach(t => t.classList.remove('active'));
@@ -169,37 +179,33 @@
 
       function showText(index) {
         clearText();
-
         switch (index) {
           case 0:
-            texts[0].classList.add('active'); // WELCOME
-            setTimeout(() => texts[1].classList.add('active'), 2000); // TO THIS WORLD
-            setTimeout(() => clearText(), 8000);
+            texts[0].classList.add('active');
+            setTimeout(() => texts[1].classList.add('active'), 2000);
+            setTimeout(clearText, 8000);
             break;
-
           case 1:
-            texts[2].classList.add('active'); // OF ANIMATED
-            texts[3].classList.add('active'); // FACES
-            setTimeout(() => clearText(), 8000);
+            texts[2].classList.add('active');
+            texts[3].classList.add('active');
+            setTimeout(clearText, 8000);
             break;
-
           case 2:
-            texts[4].classList.add('active'); // FOLLOW ME
-            setTimeout(() => clearText(), 8000);
+            texts[4].classList.add('active');
+            setTimeout(clearText, 8000);
             break;
-
           case 3:
-            texts[5].classList.add('active'); // BEAUTY
-            setTimeout(() => clearText(), 8000);
+            texts[5].classList.add('active');
+            setTimeout(clearText, 8000);
             break;
-
           case 4:
-            texts[6].classList.add('active'); // CHASER
-            setTimeout(() => clearText(), 8000);
+            texts[6].classList.add('active');
+            setTimeout(clearText, 8000);
             break;
         }
       }
 
+      // Cycle faces & texts every 20s
       setInterval(() => {
         iframes[current].classList.remove('active');
         current = (current + 1) % iframes.length;
@@ -207,7 +213,8 @@
         showText(current);
       }, 20000);
 
-      showText(current); // Initial load
+      // Initial display
+      showText(current);
     })();
   </script>
 </body>
