@@ -178,33 +178,42 @@
       }
 
       function showText(index) {
-        clearText();
-        switch (index) {
-          case 0:
-            texts[0].classList.add('active');
-            setTimeout(() => texts[1].classList.add('active'), 2000);
-            setTimeout(clearText, 8000);
-            break;
-          case 1:
-            texts[2].classList.add('active');
-            texts[3].classList.add('active');
-            setTimeout(clearText, 8000);
-            break;
-          case 2:
-            texts[4].classList.add('active');
-            setTimeout(clearText, 8000);
-            break;
-          case 3:
-            texts[5].classList.add('active');
-            setTimeout(clearText, 8000);
-            break;
-          case 4:
-            texts[6].classList.add('active');
-            setTimeout(clearText, 8000);
-            break;
-        }
-      }
+  clearText();
 
+  switch (index) {
+    case 0: 
+      // Face 1 → show ONLY “WELCOME”
+      texts[0].classList.add('active');
+      setTimeout(clearText, 8000);
+      break;
+
+    case 1:
+      // Face 2 → show ONLY “T O   T H I S   W O R L D”
+      texts[1].classList.add('active');
+      setTimeout(clearText, 8000);
+      break;
+
+    case 2:
+      // Face 3 → your next string(s)…
+      texts[2].classList.add('active');
+      texts[3].classList.add('active');
+      setTimeout(clearText, 8000);
+      break;
+
+    case 3:
+      // Face 4 → …
+      texts[4].classList.add('active');
+      setTimeout(clearText, 8000);
+      break;
+
+    case 4:
+      // Face 5 → …
+      texts[5].classList.add('active');
+      texts[6].classList.add('active');
+      setTimeout(clearText, 8000);
+      break;
+  }
+}
       // Cycle faces & texts every 20s
       setInterval(() => {
         iframes[current].classList.remove('active');
