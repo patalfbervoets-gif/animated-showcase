@@ -1,121 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Centered Faces with Offset Labels</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Patrick’s Watch Face Showcase</title>
   <style>
-    /* Full-screen black background, center gallery */
     html, body {
       margin: 0;
       padding: 0;
-      width: 100%;  height: 100%;
       background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: "Arial Black", sans-serif;
-    }
-
-    /* Stack each face-wrapper vertically, centered */
-    #gallery {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      row-gap: 60px;
-    }
-
-    /* Each wrapper is exactly the iframe size */
-    .face-wrapper {
-      position: relative;
-      width: 200px;
-      height: 200px;
-    }
-
-    /* The embedded watch face */
-    .face-frame {
       width: 100%;
       height: 100%;
+      overflow: hidden;
+    }
+
+    #container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    iframe {
+      position: absolute;
+      width: 105%;
+      height: 105%;
       border: none;
+      z-index: 1;
+      transform-origin: center center;
+      top: calc(50% + 30px); /* yOffset */
+      left: calc(50% + 0px);  /* xOffset */
+      transform: translate(-50%, -50%) scale(1.95); /* iframeScale */
+      visibility: hidden;
+    }
+
+    iframe.active {
+      visibility: visible;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      pointer-events: none;
+      background: transparent;
       display: block;
     }
 
-    /* Common label rules */
-    .label {
+    #introText {
       position: absolute;
       top: 50%;
-      transform: translateY(-50%);
-      font-size: 1.2em;
-      color: #0ff;
-      white-space: nowrap;
-      text-shadow: 0 0 5px #000;
-    }
-
-    /* All left labels at the same X offset */
-    .label.left {
-      left: -250px;      /* 200px face + 50px gap */
-      text-align: right;
-    }
-
-    /* All right labels at the same X offset */
-    .label.right {
-      right: -250px;     /* 200px face + 50px gap */
-      text-align: left;
+      left: 25%;
+      transform: translate(-50%, -50%);
+      background-color: transparent;
+      color: black;
+      padding: 20px;
+      font-family: sans-serif;
+      font-size: 1.4em;
+      z-index: 100;
+      max-width: 400px;
+      text-align: center;
+      line-height: 2.2;
+      text-shadow: 2px 2px 4px red;
     }
   </style>
 </head>
 <body>
-
-  <div id="gallery">
-
-    <!-- Face 1 + WELCOME on the left -->
-    <div class="face-wrapper">
-      <iframe
-        class="face-frame"
-        src="https://www.facer.io/w/zs6pDpzmRW/showcase?watchModel=fossilqmarshal">
-      </iframe>
-      <div class="label left">WELCOME</div>
-    </div>
-
-    <!-- Face 2 + TO_THE_WORD on the right -->
-    <div class="face-wrapper">
-      <iframe
-        class="face-frame"
-        src="https://www.facer.io/w/JsydeiEkmy/showcase?watchModel=gw5prodark">
-      </iframe>
-      <div class="label right">TO_THE_WORD</div>
-    </div>
-
-    <!-- Face 3 + OF_ANIMATED (left) & FACES (right) -->
-    <div class="face-wrapper">
-      <iframe
-        class="face-frame"
-        src="https://www.facer.io/w/S2Z9tfbuh8/showcase?watchModel=fossilqmarshal">
-      </iframe>
-      <div class="label left">OF_ANIMATED</div>
-      <div class="label right">FACES</div>
-    </div>
-
-    <!-- Face 4 + FOLLOW_ME on the left -->
-    <div class="face-wrapper">
-      <iframe
-        class="face-frame"
-        src="https://www.facer.io/w/RsnQzFDYgg/showcase?watchModel=fossilqmarshal">
-      </iframe>
-      <div class="label left">FOLLOW_ME</div>
-    </div>
-
-    <!-- Face 5 + BEAUTY (left) & CHASER (right) -->
-    <div class="face-wrapper">
-      <iframe
-        class="face-frame"
-        src="https://www.facer.io/w/02SyoSaxx9/showcase?watchModel=zenwatch3">
-      </iframe>
-      <div class="label left">BEAUTY</div>
-      <div class="label right">CHASER</div>
-    </div>
-
+  <div id="introText">
+    <p>DEAR FACE LOVER</p>
+    <br>
+    <p>THANK YOU FOR VISITING</p>
+    <br>
+    <p>HERE ARE 5 FACES OF MINE</p>
+    <br>
+    <p>ALL ANIMATED</p>
+    <br>
+    <p>WELCOME</p>
+    <br>
+    <p>TO THE WORLD</p>
+    <br>
+    <p>OF ANIMATED</p>
+    <br>
+    <p>FACE</p>
+    <br>
+    <p>BC</p>
   </div>
 
+  <div id="container">
+    <iframe class="active" src="https://www.facer.io/w/zs6pDpzmRW/showcase?prev=~2Fwatchface~2Fzs6pDpzmRW&watchModel=fossilqmarshal"></iframe>
+    <iframe src="https://www.facer.io/w/JsydeiEkmy/showcase?prev=~2Fwatchface~2FJsydeiEkmy&watchModel=gw5prodark"></iframe>
+    <iframe src="https://www.facer.io/w/S2Z9tfbuh8/showcase?prev=~2Fwatchface~2FS2Z9tfbuh8&watchModel=fossilqmarshal"></iframe>
+    <iframe src="https://www.facer.io/w/RsnQzFDYgg/showcase?prev=~2Fwatchface~2FRsnQzFDYgg&watchModel=fossilqmarshal"></iframe>
+    <iframe src="https://www.facer.io/w/02SyoSaxx9/showcase?prev=~2Fwatchface~2F02SyoSaxx9&watchModel=zenwatch3"></iframe>
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <script>
+    (function() {
+      const maskScaleMult = 1.45;
+      const maskOffsetX   = 0;
+      const maskOffsetY   = 0;
+
+      const canvas = document.getElementById('canvas'),
+            ctx    = canvas.getContext('2d'),
+            img    = new Image();
+
+      img.src = 'mask.png';
+
+      function resizeCanvas() {
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+        drawMask();
+      }
+
+      function drawMask() {
+        if (!img.complete) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        let scale = Math.min(
+          canvas.width  / img.width,
+          canvas.height / img.height
+        ) * maskScaleMult;
+
+        const w = img.width  * scale,
+              h = img.height * scale,
+              x = (canvas.width  - w) / 2 + maskOffsetX,
+              y = (canvas.height - h) / 2 + maskOffsetY;
+
+        ctx.imageSmoothingEnabled = true;
+        ctx.drawImage(img, x, y, w, h);
+      }
+
+      img.onload = resizeCanvas;
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      // Rotation logic
+      const iframes = document.querySelectorAll('iframe');
+      let current = 0;
+
+      setInterval(() => {
+        iframes[current].classList.remove('active');
+        current = (current + 1) % iframes.length;
+        iframes[current].classList.add('active');
+      }, 20000); // every 20 seconds
+
+      // Hide intro text after 10 seconds
+      setTimeout(() => {
+        const introText = document.getElementById('introText');
+        if (introText) {
+          introText.style.display = 'none';
+        }
+      }, 10000);
+    })();
+  </script>
 </body>
 </html>
