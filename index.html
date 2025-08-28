@@ -50,21 +50,28 @@
       display: block;
     }
 
-    .floating-text {
+    .text-container {
       position: absolute;
+      width: 200px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .floating-text {
       color: black;
       opacity: 0;
       z-index: 5;
       letter-spacing: 0.4em;
       text-shadow: 0 0 10px #fff, 0 0 20px #0ff, 0 0 30px #0ff;
       white-space: nowrap;
-
       font-size: var(--font-size, 2em);
-      top:       var(--top, 50%);
-      left:      var(--left, auto);
-      right:     var(--right, auto);
-      text-align: var(--align, center);
-      transform: rotate(var(--angle, 270deg)) translateY(-50%);
+      transform: rotate(var(--angle, 270deg));
+      transform-origin: center center;
+      text-align: center;
     }
 
     .floating-text.active {
@@ -74,10 +81,10 @@
 
     @keyframes bounce {
       0%, 100% {
-        transform: rotate(var(--angle, 270deg)) translateY(-50%) translateY(0);
+        transform: rotate(var(--angle, 270deg)) translateY(0);
       }
       50% {
-        transform: rotate(var(--angle, 270deg)) translateY(-50%) translateY(-10px);
+        transform: rotate(var(--angle, 270deg)) translateY(-10px);
       }
     }
 
@@ -97,35 +104,29 @@
     <iframe src="https://www.facer.io/w/RsnQzFDYgg/showcase?watchModel=fossilqmarshal"></iframe>
     <iframe src="https://www.facer.io/w/02SyoSaxx9/showcase?watchModel=zenwatch3"></iframe>
 
-    <!-- Floating Texts -->
-    <!-- LEFT-SIDE (Updated) -->
-    <div class="floating-text" style="--font-size:1.5em; --top:50%; --left:15%; --angle:270deg; --align:left;">
-      W E L C O M E
+    <!-- LEFT-SIDE TEXTS -->
+    <div class="text-container" style="top: 20%; left: 15%;">
+      <div class="floating-text" style="--font-size:1.5em; --angle:270deg;">W E L C O M E</div>
+    </div>
+    <div class="text-container" style="top: 35%; left: 15%;">
+      <div class="floating-text" style="--font-size:1.5em; --angle:270deg;">O F _ A N I M A T E D</div>
+    </div>
+    <div class="text-container" style="top: 50%; left: 15%;">
+      <div class="floating-text" style="--font-size:1.5em; --angle:270deg;">F O L L O W _ M E</div>
+    </div>
+    <div class="text-container" style="top: 65%; left: 15%;">
+      <div class="floating-text" style="--font-size:1.5em; --angle:270deg;">B E A U T Y</div>
     </div>
 
-    <div class="floating-text" style="--font-size:1.5em; --top:50%; --left:15%; --angle:270deg; --align:left;">
-      O F _ A N I M A T E D
+    <!-- RIGHT-SIDE TEXTS -->
+    <div class="text-container" style="top: 20%; left: 85%;">
+      <div class="floating-text" style="--font-size:2.3em; --angle:90deg;">T O _ T H I S _ W O R L D</div>
     </div>
-
-    <div class="floating-text" style="--font-size:1.5em; --top:50%; --left:15%; --angle:270deg; --align:left;">
-      F O L L O W _ M E
+    <div class="text-container" style="top: 35%; left: 85%;">
+      <div class="floating-text" style="--font-size:2.3em; --angle:90deg;">F A C E S</div>
     </div>
-
-    <div class="floating-text" style="--font-size:1.5em; --top:50%; --left:15%; --angle:270deg; --align:left;">
-      B E A U T Y
-    </div>
-
-    <!-- RIGHT-SIDE (Preserved) -->
-    <div class="floating-text" style="--font-size:2.3em; --top:40%; --left:85%; --angle:90deg; --align:left;">
-      T O _ T H I S _ W O R L D
-    </div>
-
-    <div class="floating-text" style="--font-size:2.3em; --top:50%; --left:85%; --angle:90deg; --align:left;">
-      F A C E S
-    </div>
-
-    <div class="floating-text" style="--font-size:2.3em; --top:50%; --left:85%; --angle:90deg; --align:left;">
-      C H A S E R
+    <div class="text-container" style="top: 50%; left: 85%;">
+      <div class="floating-text" style="--font-size:2.3em; --angle:90deg;">C H A S E R</div>
     </div>
 
     <canvas id="canvas"></canvas>
