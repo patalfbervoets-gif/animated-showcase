@@ -49,45 +49,48 @@
       display: block;
     }
 
-   #introText {
-  position: absolute;
-  top: 50%;
-  left: 25%;
-  transform: translate(-50%, -50%);
-  background-color: transparent;
-  color: black;
-  padding: 10px;
-  font-family: sans-serif;
-  font-size: 1em;
-  z-index: 100;
-  max-width: 400px;
-  text-align: center;
-  line-height: 1.6;
-  text-shadow: 1px 1px 3px red;
-}
+    #introText {
+      position: absolute;
+      top: 50%;
+      left: 25%;
+      transform: translate(-50%, -50%);
+      background-color: transparent;
+      color: black;
+      padding: 10px;
+      font-family: sans-serif;
+      font-size: 1em;
+      z-index: 100;
+      max-width: 400px;
+      text-align: center;
+      line-height: 1.6;
+      text-shadow: 1px 1px 3px red;
+    }
+
+    #logoImage {
+      position: absolute;
+      top: 50%;
+      left: 75%;
+      transform: translate(-50%, -50%);
+      width: 120px;
+      height: auto;
+      z-index: 100;
     }
   </style>
 </head>
 <body>
   <div id="introText">
     <p>DEAR FACE LOVER</p>
-    <br>
     <p>THANK YOU FOR VISITING</p>
-
     <p>HERE ARE 5 FACES OF MINE</p>
-  
     <p>ALL ANIMATED</p>
-    <br>
     <p>WELCOME</p>
-   
     <p>TO THE WORLD</p>
-   
     <p>OF ANIMATED</p>
-  
     <p>FACES</p>
-    <br>
     <p>BC</p>
   </div>
+
+  <img id="logoImage" src="index.png" alt="Logo">
 
   <div id="container">
     <iframe class="active" src="https://www.facer.io/w/zs6pDpzmRW/showcase?prev=~2Fwatchface~2Fzs6pDpzmRW&watchModel=fossilqmarshal"></iframe>
@@ -148,12 +151,12 @@
         iframes[current].classList.add('active');
       }, 20000); // every 20 seconds
 
-      // Hide intro text after 10 seconds
+      // Hide intro text and logo after 10 seconds
       setTimeout(() => {
         const introText = document.getElementById('introText');
-        if (introText) {
-          introText.style.display = 'none';
-        }
+        const logo = document.getElementById('logoImage');
+        if (introText) introText.style.display = 'none';
+        if (logo) logo.style.display = 'none';
       }, 10000);
     })();
   </script>
