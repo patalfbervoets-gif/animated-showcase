@@ -72,12 +72,14 @@
 
     .floating-text.left {
       left: var(--left-offset); /* 🔴 Adjust left text offset here */
-      transform: rotate(270deg);
+      --angle: 270deg;
+      transform: rotate(var(--angle));
     }
 
     .floating-text.right {
       right: var(--right-offset); /* 🔴 Adjust right text offset here */
-      transform: rotate(90deg);
+      --angle: 90deg;
+      transform: rotate(var(--angle));
     }
 
     .floating-text.big {
@@ -89,8 +91,8 @@
     }
 
     @keyframes bounce {
-      0%, 100% { transform: translateY(0) rotate(var(--angle)); }
-      50%      { transform: translateY(-10px) rotate(var(--angle)); }
+      0%, 100% { transform: rotate(var(--angle)) translateY(0); }
+      50%      { transform: rotate(var(--angle)) translateY(-10px); }
     }
 
     @keyframes glow {
@@ -110,13 +112,13 @@
     <iframe src="https://www.facer.io/w/02SyoSaxx9/showcase?watchModel=zenwatch3"></iframe>
 
     <!-- Floating Texts -->
-    <div class="floating-text left big">W E L C O M E</div>
-    <div class="floating-text right big">T O     T H I S     W O R L D</div>
-    <div class="floating-text left">O F   A N I M A T E D</div>
-    <div class="floating-text right big">F A C E S</div>
-    <div class="floating-text left big">F O L L O W   M E</div>
-    <div class="floating-text left big">B E A U T Y</div>
-    <div class="floating-text right big">C H A S E R</div>
+    <div class="floating-text left big">W E L C O M E</div>                     <!-- 0 -->
+    <div class="floating-text right big">T O     T H I S     W O R L D</div>   <!-- 1 -->
+    <div class="floating-text left">O F   A N I M A T E D</div>                <!-- 2 -->
+    <div class="floating-text right big">F A C E S</div>                       <!-- 3 -->
+    <div class="floating-text left big">F O L L O W   M E</div>                <!-- 4 -->
+    <div class="floating-text left big">B E A U T Y</div>                      <!-- 5 -->
+    <div class="floating-text right big">C H A S E R</div>                     <!-- 6 -->
 
     <canvas id="canvas"></canvas>
   </div>
@@ -168,34 +170,28 @@
           case 0:
             texts[0].classList.add('active'); // WELCOME
             setTimeout(() => texts[1].classList.add('active'), 2000); // TO THIS WORLD
-            setTimeout(() => {
-              texts[0].classList.remove('active');
-              texts[1].classList.remove('active');
-            }, 8000);
+            setTimeout(() => clearText(), 8000);
             break;
 
           case 1:
             texts[2].classList.add('active'); // OF ANIMATED
             texts[3].classList.add('active'); // FACES
-            setTimeout(() => {
-              texts[2].classList.remove('active');
-              texts[3].classList.remove('active');
-            }, 8000);
+            setTimeout(() => clearText(), 8000);
             break;
 
           case 2:
             texts[4].classList.add('active'); // FOLLOW ME
-            setTimeout(() => texts[4].classList.remove('active'), 8000);
+            setTimeout(() => clearText(), 8000);
             break;
 
           case 3:
             texts[5].classList.add('active'); // BEAUTY
-            setTimeout(() => texts[5].classList.remove('active'), 8000);
+            setTimeout(() => clearText(), 8000);
             break;
 
           case 4:
             texts[6].classList.add('active'); // CHASER
-            setTimeout(() => texts[6].classList.remove('active'), 8000);
+            setTimeout(() => clearText(), 8000);
             break;
         }
       }
