@@ -71,7 +71,7 @@
       top: 50%;
       left: 75%;
       transform: translate(-50%, -50%);
-      width: 120px;
+      width: 360px; /* Enlarged 3x from original 120px */
       height: auto;
       z-index: 100;
     }
@@ -90,9 +90,73 @@
     <p>BC</p>
   </div>
 
-  <!-- ✅ Corrected image filename -->
+  <!-- ✅ Corrected image filename and enlarged -->
   <img id="logoImage" src="001.png" alt="Logo">
 
   <div id="container">
     <iframe class="active" src="https://www.facer.io/w/zs6pDpzmRW/showcase?prev=~2Fwatchface~2Fzs6pDpzmRW&watchModel=fossilqmarshal"></iframe>
-    <iframe src="https://www.facer.io/w/JsydeiEkmy/showcase?prev=~2Fwatchface~2FJsydeiEkmy&watchModel=gw5prodark">
+    <iframe src="https://www.facer.io/w/JsydeiEkmy/showcase?prev=~2Fwatchface~2FJsydeiEkmy&watchModel=gw5prodark"></iframe>
+    <iframe src="https://www.facer.io/w/S2Z9tfbuh8/showcase?prev=~2Fwatchface~2FS2Z9tfbuh8&watchModel=fossilqmarshal"></iframe>
+    <iframe src="https://www.facer.io/w/RsnQzFDYgg/showcase?prev=~2Fwatchface~2FRsnQzFDYgg&watchModel=fossilqmarshal"></iframe>
+    <iframe src="https://www.facer.io/w/02SyoSaxx9/showcase?prev=~2Fwatchface~2F02SyoSaxx9&watchModel=zenwatch3"></iframe>
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <script>
+    (function() {
+      const maskScaleMult = 1.45;
+      const maskOffsetX   = 0;
+      const maskOffsetY   = 0;
+
+      const canvas = document.getElementById('canvas'),
+            ctx    = canvas.getContext('2d'),
+            img    = new Image();
+
+      img.src = 'mask.png';
+
+      function resizeCanvas() {
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+        drawMask();
+      }
+
+      function drawMask() {
+        if (!img.complete) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        let scale = Math.min(
+          canvas.width  / img.width,
+          canvas.height / img.height
+        ) * maskScaleMult;
+
+        const w = img.width  * scale,
+              h = img.height * scale,
+              x = (canvas.width  - w) / 2 + maskOffsetX,
+              y = (canvas.height - h) / 2 + maskOffsetY;
+
+        ctx.imageSmoothingEnabled = true;
+        ctx.drawImage(img, x, y, w, h);
+      }
+
+      img.onload = resizeCanvas;
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      const iframes = document.querySelectorAll('iframe');
+      let current = 0;
+
+      setInterval(() => {
+        iframes[current].classList.remove('active');
+        current = (current + 1) % iframes.length;
+        iframes[current].classList.add('active');
+      }, 20000);
+
+      // Only hide intro text, keep logo visible
+      setTimeout(() => {
+        const introText = document.getElementById('introText');
+        if (introText) introText.style.display = 'none';
+      }, 10000);
+    })();
+  </script>
+</body>
+</html>
