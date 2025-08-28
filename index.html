@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Patrick’s Animated Showcase</title>
+  <title>Patrick’s Faces & Labels</title>
   <style>
     html, body {
       margin: 0;
@@ -13,184 +13,91 @@
       height: 100%;
       overflow: hidden;
       font-family: 'Arial Black', sans-serif;
-    }
-
-    #container {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-
-    /* Watch‐face iframes */
-    iframe {
-      position: absolute;
-      width: 105%;
-      height: 105%;
-      border: none;
-      z-index: 1;
-      top: calc(50% + 30px);
-      left: 50%;
-      transform: translate(-50%, -50%) scale(1.95);
-      transform-origin: center center;
-      visibility: hidden;
-    }
-    iframe.active {
-      visibility: visible;
-    }
-
-    /* Canvas mask */
-    canvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 10;
-      pointer-events: none;
-      background: transparent;
-      display: block;
-    }
-
-    /* Invisible box that fixes position/size of every text */
-    .text-container {
-      position: absolute;
-      width: 200px;
-      height: 50px;
       display: flex;
       align-items: center;
       justify-content: center;
-      pointer-events: none;
-      /* NO translateY here—top: X% now maps exactly to the top of the box */
     }
 
-    /* The text itself, centered then rotated around its middle */
-    .floating-text {
-      font-size: var(--font-size, 2em);
-      color: black;
-      opacity: 0;
+    #gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 60px;
+      align-items: center;
+      justify-content: center;
+      max-width: 90vw;
+    }
+
+    .face-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
+    /* Text on the left of the iframe */
+    .face-wrapper.left {
+      flex-direction: row;
+    }
+
+    /* Text on the right of the iframe */
+    .face-wrapper.right {
+      flex-direction: row-reverse;
+    }
+
+    .face-frame {
+      width: 200px;
+      height: 200px;
+      border: none;
+      flex-shrink: 0;
+    }
+
+    .label {
+      color: #0ff;
+      font-size: 1.2em;
       white-space: nowrap;
-      letter-spacing: 0.4em;
-      text-align: center;
-      transform: rotate(var(--angle, 270deg));
-      transform-origin: center center;
-      text-shadow: 0 0 10px #fff, 0 0 20px #0ff, 0 0 30px #0ff;
-      z-index: 5;
-    }
-    /* Only visible when we add .active */
-    .floating-text.active {
-      opacity: 1;
-      animation: bounce 1.5s infinite ease-in-out,
-                 glow   2s   infinite ease-in-out;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: rotate(var(--angle)) translateY(0); }
-      50%      { transform: rotate(var(--angle)) translateY(-10px); }
-    }
-    @keyframes glow {
-      0%   { text-shadow: 0 0 10px #fff, 0 0 20px #0ff; }
-      50%  { text-shadow: 0 0 20px #fff, 0 0 40px #0ff; }
-      100% { text-shadow: 0 0 10px #fff, 0 0 20px #0ff; }
+      margin: 0 12px;
+      text-shadow: 0 0 5px #000;
     }
   </style>
 </head>
 <body>
-  <div id="container">
+  <div id="gallery">
 
-    <!-- Watch Faces -->
-    <iframe class="active" src="https://www.facer.io/w/zs6pDpzmRW/showcase?watchModel=fossilqmarshal"></iframe>
-    <iframe src="https://www.facer.io/w/JsydeiEkmy/showcase?watchModel=gw5prodark"></iframe>
-    <iframe src="https://www.facer.io/w/S2Z9tfbuh8/showcase?watchModel=fossilqmarshal"></iframe>
-    <iframe src="https://www.facer.io/w/RsnQzFDYgg/showcase?watchModel=fossilqmarshal"></iframe>
-    <iframe src="https://www.facer.io/w/02SyoSaxx9/showcase?watchModel=zenwatch3"></iframe>
-
-    <!-- LEFT-SIDE TEXTS @ left:15% -->
-    <div class="text-container" style="top: 20%; left: 15%;">
-      <div class="floating-text" style="--font-size:1.5em; --angle:270deg;">W E L C O M E</div>
-    </div>
-    <div class="text-container" style="top: 35%; left: 15%;">
-      <div class="floating-text" style="--font-size:1.5em; --angle:270deg;">O F _ A N I M A T E D</div>
-    </div>
-    <div class="text-container" style="top: 50%; left: 15%;">
-      <div class="floating-text" style="--font-size:1.5em; --angle:270deg;">F O L L O W _ M E</div>
-    </div>
-    <div class="text-container" style="top: 65%; left: 15%;">
-      <div class="floating-text" style="--font-size:1.5em; --angle:270deg;">B E A U T Y</div>
+    <!-- 1) Left-side labels -->
+    <div class="face-wrapper left">
+      <div class="label">W E L C O M E</div>
+      <iframe class="face-frame"
+              src="https://www.facer.io/w/zs6pDpzmRW/showcase?watchModel=fossilqmarshal">
+      </iframe>
     </div>
 
-    <!-- RIGHT-SIDE TEXTS @ left:85% -->
-    <div class="text-container" style="top: 20%; left: 85%;">
-      <div class="floating-text" style="--font-size:2.3em; --angle:90deg;">T O _ T H I S _ W O R L D</div>
-    </div>
-    <div class="text-container" style="top: 35%; left: 85%;">
-      <div class="floating-text" style="--font-size:2.3em; --angle:90deg;">F A C E S</div>
-    </div>
-    <div class="text-container" style="top: 50%; left: 85%;">
-      <div class="floating-text" style="--font-size:2.3em; --angle:90deg;">C H A S E R</div>
+    <div class="face-wrapper left">
+      <div class="label">O F _ A N I M A T E D</div>
+      <iframe class="face-frame"
+              src="https://www.facer.io/w/JsydeiEkmy/showcase?watchModel=gw5prodark">
+      </iframe>
     </div>
 
-    <canvas id="canvas"></canvas>
+    <div class="face-wrapper left">
+      <div class="label">F O L L O W _ M E</div>
+      <iframe class="face-frame"
+              src="https://www.facer.io/w/S2Z9tfbuh8/showcase?watchModel=fossilqmarshal">
+      </iframe>
+    </div>
+
+    <div class="face-wrapper left">
+      <div class="label">B E A U T Y</div>
+      <iframe class="face-frame"
+              src="https://www.facer.io/w/RsnQzFDYgg/showcase?watchModel=fossilqmarshal">
+      </iframe>
+    </div>
+
+    <!-- 2) Right-side label -->
+    <div class="face-wrapper right">
+      <div class="label">C H A S E R</div>
+      <iframe class="face-frame"
+              src="https://www.facer.io/w/02SyoSaxx9/showcase?watchModel=zenwatch3">
+      </iframe>
+    </div>
+
   </div>
-
-  <script>
-  (function() {
-    const canvas  = document.getElementById('canvas'),
-          ctx     = canvas.getContext('2d'),
-          img     = new Image(),
-          iframes = document.querySelectorAll('iframe'),
-          texts   = document.querySelectorAll('.floating-text');
-    let   current = 0;
-
-    // DRAW MASK
-    img.src = 'mask.png';
-    function resizeCanvas() {
-      canvas.width  = window.innerWidth;
-      canvas.height = window.innerHeight;
-      drawMask();
-    }
-    function drawMask() {
-      if (!img.complete) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const scale = Math.min(canvas.width / img.width, canvas.height / img.height) * 1.45,
-            w     = img.width  * scale,
-            h     = img.height * scale,
-            x     = (canvas.width  - w) / 2,
-            y     = (canvas.height - h) / 2;
-      ctx.imageSmoothingEnabled = true;
-      ctx.drawImage(img, x, y, w, h);
-    }
-    img.onload = resizeCanvas;
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    // TEXT SHOW/HIDE
-    function clearText() {
-      texts.forEach(t => t.classList.remove('active'));
-    }
-    function showText(idx) {
-      clearText();
-      if (idx === 0) {
-        // show all lefties together
-        [0,1,2,3].forEach(i => texts[i].classList.add('active'));
-      } else if (idx === 1) {
-        texts[4].classList.add('active');
-      } else if (idx === 2) {
-        texts[5].classList.add('active');
-      } else if (idx === 3) {
-        texts[6].classList.add('active');
-      }
-      setTimeout(clearText, 8000);
-    }
-
-    // CYCLE IFRAMES + TEXT
-    iframes[current].classList.add('active');
-    showText(current);
-    setInterval(() => {
-      iframes[current].classList.remove('active');
-      current = (current + 1) % iframes.length;
-      iframes[current].classList.add('active');
-      showText(current);
-    }, 20000);
-
-  })();
-  </script>
 </body>
 </html>
