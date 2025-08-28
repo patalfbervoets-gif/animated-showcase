@@ -59,12 +59,11 @@
       text-shadow: 0 0 10px #fff, 0 0 20px #0ff, 0 0 30px #0ff;
       white-space: nowrap;
 
-      /* variable-driven properties with fallbacks */
       font-size: var(--font-size, 2em);
-      top:       var(--top,      50%);
-      left:      var(--left,     auto);
-      right:     var(--right,    auto);
-      text-align: var(--align,   center);
+      top:       var(--top, 50%);
+      left:      var(--left, auto);
+      right:     var(--right, auto);
+      text-align: var(--align, center);
       transform: rotate(var(--angle, 270deg)) translateY(-50%);
     }
 
@@ -98,39 +97,39 @@
     <iframe src="https://www.facer.io/w/RsnQzFDYgg/showcase?watchModel=fossilqmarshal"></iframe>
     <iframe src="https://www.facer.io/w/02SyoSaxx9/showcase?watchModel=zenwatch3"></iframe>
 
-    <!-- Floating Texts -->
+    <!-- Floating Texts (all vertically centered) -->
     <div class="floating-text"
-         style="--font-size: 2em; --left: 200px; --top: 50%; --angle: 270deg; --align: right;">
+         style="--font-size:3em; --top:50%; --left:100px; --angle:270deg; --align:right;">
       W E L C O M E
     </div>
 
     <div class="floating-text"
-         style="--font-size: 1.5em; --right: 200px; --top: 30%; --angle: 90deg; --align: left;">
-      T O     T H I S     W O R L D
+         style="--font-size:3em; --top:50%; --right:100px; --angle:90deg; --align:left;">
+      T O   T H I S   W O R L D
     </div>
 
     <div class="floating-text"
-         style="--font-size: 1.5em; --left: 120px; --top: 50%; --angle: 270deg; --align: right;">
+         style="--font-size:1.5em; --top:50%; --left:120px; --angle:270deg; --align:right;">
       O F   A N I M A T E D
     </div>
 
     <div class="floating-text"
-         style="--font-size: 3em; --right: 120px; --top: 50%; --angle: 90deg; --align: left;">
+         style="--font-size:3em; --top:50%; --right:120px; --angle:90deg; --align:left;">
       F A C E S
     </div>
 
     <div class="floating-text"
-         style="--font-size: 3em; --left: 140px; --top: 70%; --angle: 270deg; --align: right;">
+         style="--font-size:3em; --top:50%; --left:140px; --angle:270deg; --align:right;">
       F O L L O W   M E
     </div>
 
     <div class="floating-text"
-         style="--font-size: 3em; --left: 160px; --top: 80%; --angle: 270deg; --align: right;">
+         style="--font-size:3em; --top:50%; --left:160px; --angle:270deg; --align:right;">
       B E A U T Y
     </div>
 
     <div class="floating-text"
-         style="--font-size: 3em; --right: 140px; --top: 80%; --angle: 90deg; --align: left;">
+         style="--font-size:3em; --top:50%; --right:140px; --angle:90deg; --align:left;">
       C H A S E R
     </div>
 
@@ -143,7 +142,7 @@
             ctx    = canvas.getContext('2d'),
             img    = new Image();
 
-      img.src = 'mask.png'; // ensure mask.png is in your project root
+      img.src = 'mask.png';
 
       function resizeCanvas() {
         canvas.width  = window.innerWidth;
@@ -178,43 +177,33 @@
       }
 
       function showText(index) {
-  clearText();
+        clearText();
+        switch (index) {
+          case 0:
+            texts[0].classList.add('active');
+            setTimeout(clearText, 8000);
+            break;
+          case 1:
+            texts[1].classList.add('active');
+            setTimeout(clearText, 8000);
+            break;
+          case 2:
+            texts[2].classList.add('active');
+            texts[3].classList.add('active');
+            setTimeout(clearText, 8000);
+            break;
+          case 3:
+            texts[4].classList.add('active');
+            setTimeout(clearText, 8000);
+            break;
+          case 4:
+            texts[5].classList.add('active');
+            texts[6].classList.add('active');
+            setTimeout(clearText, 8000);
+            break;
+        }
+      }
 
-  switch (index) {
-    case 0: 
-      // Face 1 → show ONLY “WELCOME”
-      texts[0].classList.add('active');
-      setTimeout(clearText, 8000);
-      break;
-
-    case 1:
-      // Face 2 → show ONLY “T O   T H I S   W O R L D”
-      texts[1].classList.add('active');
-      setTimeout(clearText, 8000);
-      break;
-
-    case 2:
-      // Face 3 → your next string(s)…
-      texts[2].classList.add('active');
-      texts[3].classList.add('active');
-      setTimeout(clearText, 8000);
-      break;
-
-    case 3:
-      // Face 4 → …
-      texts[4].classList.add('active');
-      setTimeout(clearText, 8000);
-      break;
-
-    case 4:
-      // Face 5 → …
-      texts[5].classList.add('active');
-      texts[6].classList.add('active');
-      setTimeout(clearText, 8000);
-      break;
-  }
-}
-      // Cycle faces & texts every 20s
       setInterval(() => {
         iframes[current].classList.remove('active');
         current = (current + 1) % iframes.length;
@@ -222,7 +211,6 @@
         showText(current);
       }, 20000);
 
-      // Initial display
       showText(current);
     })();
   </script>
