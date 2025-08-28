@@ -98,20 +98,13 @@
     <iframe src="https://www.facer.io/w/02SyoSaxx9/showcase?watchModel=zenwatch3"></iframe>
 
     <!-- Floating Texts -->
+    <!-- LEFT-SIDE (Updated) -->
     <div class="floating-text" style="--font-size:1.5em; --top:50%; --left:25%; --angle:270deg; --align:left;">
       W E L C O M E
     </div>
 
-    <div class="floating-text" style="--font-size:2.3em; --top:40%; --left:85%; --angle:90deg; --align:left;">
-      T O _ T H I S _ W O R L D
-    </div>
-
     <div class="floating-text" style="--font-size:1.5em; --top:50%; --left:25%; --angle:270deg; --align:left;">
       O F _ A N I M A T E D
-    </div>
-
-    <div class="floating-text" style="--font-size:2.3em; --top:50%; --left:85%; --angle:90deg; --align:left;">
-      F A C E S
     </div>
 
     <div class="floating-text" style="--font-size:1.5em; --top:50%; --left:25%; --angle:270deg; --align:left;">
@@ -120,6 +113,15 @@
 
     <div class="floating-text" style="--font-size:1.5em; --top:50%; --left:25%; --angle:270deg; --align:left;">
       B E A U T Y
+    </div>
+
+    <!-- RIGHT-SIDE (Preserved) -->
+    <div class="floating-text" style="--font-size:2.3em; --top:40%; --left:85%; --angle:90deg; --align:left;">
+      T O _ T H I S _ W O R L D
+    </div>
+
+    <div class="floating-text" style="--font-size:2.3em; --top:50%; --left:85%; --angle:90deg; --align:left;">
+      F A C E S
     </div>
 
     <div class="floating-text" style="--font-size:2.3em; --top:50%; --left:85%; --angle:90deg; --align:left;">
@@ -177,20 +179,20 @@
             setTimeout(clearText, 8000);
             break;
           case 1:
-            texts[1].classList.add('active');
-            setTimeout(clearText, 8000);
-            break;
-          case 2:
-            texts[2].classList.add('active');
-            texts[3].classList.add('active');
-            setTimeout(clearText, 8000);
-            break;
-          case 3:
             texts[4].classList.add('active');
             setTimeout(clearText, 8000);
             break;
-          case 4:
+          case 2:
+            texts[1].classList.add('active');
             texts[5].classList.add('active');
+            setTimeout(clearText, 8000);
+            break;
+          case 3:
+            texts[2].classList.add('active');
+            setTimeout(clearText, 8000);
+            break;
+          case 4:
+            texts[3].classList.add('active');
             texts[6].classList.add('active');
             setTimeout(clearText, 8000);
             break;
