@@ -27,9 +27,9 @@
       border: none;
       z-index: 1;
       transform-origin: center center;
-      top: calc(50% + 30px); /* yOffset */
-      left: calc(50% + 0px);  /* xOffset */
-      transform: translate(-50%, -50%) scale(1.95); /* iframeScale */
+      top: calc(50% + 30px);
+      left: calc(50% + 0px);
+      transform: translate(-50%, -50%) scale(1.95);
       visibility: hidden;
     }
 
@@ -90,7 +90,7 @@
     <p>BC</p>
   </div>
 
-  <img id="logoImage" src="index.png" alt="Logo">
+  <img id="logoImage" src="0001.png" alt="Logo">
 
   <div id="container">
     <iframe class="active" src="https://www.facer.io/w/zs6pDpzmRW/showcase?prev=~2Fwatchface~2Fzs6pDpzmRW&watchModel=fossilqmarshal"></iframe>
@@ -141,7 +141,6 @@
       window.addEventListener('resize', resizeCanvas);
       resizeCanvas();
 
-      // Rotation logic
       const iframes = document.querySelectorAll('iframe');
       let current = 0;
 
@@ -149,9 +148,8 @@
         iframes[current].classList.remove('active');
         current = (current + 1) % iframes.length;
         iframes[current].classList.add('active');
-      }, 20000); // every 20 seconds
+      }, 20000);
 
-      // Hide intro text and logo after 10 seconds
       setTimeout(() => {
         const introText = document.getElementById('introText');
         const logo = document.getElementById('logoImage');
