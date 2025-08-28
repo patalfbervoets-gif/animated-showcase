@@ -62,24 +62,22 @@
       opacity: 0;
       z-index: 5;
       letter-spacing: 0.4em;
-      text-shadow: none;
+      text-shadow: 0 0 10px #fff, 0 0 20px #0ff, 0 0 30px #0ff;
     }
 
     .floating-text.active {
       opacity: 1;
-      animation: pulse 2s infinite ease-in-out;
+      animation: bounce 1.5s infinite ease-in-out, glow 2s infinite ease-in-out;
     }
 
     .floating-text.left {
       left: var(--left-offset); /* 🔴 Adjust left text offset here */
       transform: rotate(270deg);
-      animation: float-left 3s ease-in-out infinite, pulse 2s infinite ease-in-out;
     }
 
     .floating-text.right {
       right: var(--right-offset); /* 🔴 Adjust right text offset here */
       transform: rotate(90deg);
-      animation: float-right 3s ease-in-out infinite, pulse 2s infinite ease-in-out;
     }
 
     .floating-text.big {
@@ -90,22 +88,15 @@
       font-size: 1.5em;
     }
 
-    @keyframes float-left {
-      0%   { transform: rotate(270deg) translateY(0); }
-      50%  { transform: rotate(270deg) translateY(-10px); }
-      100% { transform: rotate(270deg) translateY(0); }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0) rotate(var(--angle)); }
+      50%      { transform: translateY(-10px) rotate(var(--angle)); }
     }
 
-    @keyframes float-right {
-      0%   { transform: rotate(90deg) translateY(0); }
-      50%  { transform: rotate(90deg) translateY(-10px); }
-      100% { transform: rotate(90deg) translateY(0); }
-    }
-
-    @keyframes pulse {
-      0%   { opacity: 1; }
-      50%  { opacity: 0.7; }
-      100% { opacity: 1; }
+    @keyframes glow {
+      0%   { text-shadow: 0 0 10px #fff, 0 0 20px #0ff; }
+      50%  { text-shadow: 0 0 20px #fff, 0 0 40px #0ff; }
+      100% { text-shadow: 0 0 10px #fff, 0 0 20px #0ff; }
     }
   </style>
 </head>
@@ -172,34 +163,39 @@
 
       function showText(index) {
         clearText();
+
         switch (index) {
           case 0:
-            texts[0].classList.add('active');
-            setTimeout(() => texts[0].classList.remove('active'), 8000);
+            texts[0].classList.add('active'); // WELCOME
+            setTimeout(() => texts[1].classList.add('active'), 2000); // TO THIS WORLD
+            setTimeout(() => {
+              texts[0].classList.remove('active');
+              texts[1].classList.remove('active');
+            }, 8000);
             break;
+
           case 1:
-            texts[1].classList.add('active');
-            setTimeout(() => texts[1].classList.remove('active'), 8000);
-            break;
-          case 2:
-            texts[2].classList.add('active');
-            texts[3].classList.add('active');
+            texts[2].classList.add('active'); // OF ANIMATED
+            texts[3].classList.add('active'); // FACES
             setTimeout(() => {
               texts[2].classList.remove('active');
               texts[3].classList.remove('active');
             }, 8000);
             break;
-          case 3:
-            texts[4].classList.add('active');
+
+          case 2:
+            texts[4].classList.add('active'); // FOLLOW ME
             setTimeout(() => texts[4].classList.remove('active'), 8000);
             break;
+
+          case 3:
+            texts[5].classList.add('active'); // BEAUTY
+            setTimeout(() => texts[5].classList.remove('active'), 8000);
+            break;
+
           case 4:
-            texts[5].classList.add('active');
-            setTimeout(() => texts[6].classList.add('active'), 8000);
-            setTimeout(() => {
-              texts[5].classList.remove('active');
-              texts[6].classList.remove('active');
-            }, 20000);
+            texts[6].classList.add('active'); // CHASER
+            setTimeout(() => texts[6].classList.remove('active'), 8000);
             break;
         }
       }
@@ -211,7 +207,7 @@
         showText(current);
       }, 20000);
 
-      showText(current);
+      showText(current); // Initial load
     })();
   </script>
 </body>
