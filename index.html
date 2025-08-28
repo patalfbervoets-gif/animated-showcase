@@ -52,9 +52,6 @@
     .floating-text {
       position: absolute;
       top: 10%;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 3em;
       color: #000;
       font-family: 'Arial Black', sans-serif;
       opacity: 0;
@@ -68,10 +65,28 @@
       animation: float 3s ease-in-out infinite, pulse 2s infinite ease-in-out;
     }
 
+    .floating-text.left {
+      left: 5%;
+      transform: translateY(0);
+    }
+
+    .floating-text.right {
+      right: 5%;
+      transform: translateY(0);
+    }
+
+    .floating-text.big {
+      font-size: 6em;
+    }
+
+    .floating-text:not(.big) {
+      font-size: 3em;
+    }
+
     @keyframes float {
-      0%   { transform: translateX(-50%) translateY(0); }
-      50%  { transform: translateX(-50%) translateY(-10px); }
-      100% { transform: translateX(-50%) translateY(0); }
+      0%   { transform: translateY(0); }
+      50%  { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
     }
 
     @keyframes pulse {
@@ -91,9 +106,13 @@
     <iframe src="https://www.facer.io/w/02SyoSaxx9/showcase?prev=~2Fwatchface~2F02SyoSaxx9&watchModel=zenwatch3"></iframe>
 
     <!-- Floating Texts -->
-    <div class="floating-text active">W E L C O M E</div>
-    <div class="floating-text">TO THIS WORLD</div>
-    <div class="floating-text">OF A N I M A T E D F A C E S</div>
+    <div class="floating-text left big">W E L C O M E</div>
+    <div class="floating-text right big">T O   T H I S   W O R L D</div>
+    <div class="floating-text left">O F   A N I M A T E D</div>
+    <div class="floating-text right big">F A C E S</div>
+    <div class="floating-text left big">F O L L O W   M E</div>
+    <div class="floating-text left big">B E A U T Y</div>
+    <div class="floating-text right big">C H A S E R</div>
 
     <canvas id="canvas"></canvas>
   </div>
@@ -138,25 +157,56 @@
       window.addEventListener('resize', resizeCanvas);
       resizeCanvas();
 
-      // Rotation logic
       const iframes = document.querySelectorAll('iframe');
       const texts = document.querySelectorAll('.floating-text');
       let current = 0;
 
+      function clearText() {
+        texts.forEach(t => t.classList.remove('active'));
+      }
+
+      function showText(index) {
+        clearText();
+        switch (index) {
+          case 0:
+            texts[0].classList.add('active'); // WELCOME
+            setTimeout(() => texts[0].classList.remove('active'), 8000);
+            break;
+          case 1:
+            texts[1].classList.add('active'); // TO THIS WORLD
+            setTimeout(() => texts[1].classList.remove('active'), 8000);
+            break;
+          case 2:
+            texts[2].classList.add('active'); // OF ANIMATED
+            texts[3].classList.add('active'); // FACES
+            setTimeout(() => {
+              texts[2].classList.remove('active');
+              texts[3].classList.remove('active');
+            }, 8000);
+            break;
+          case 3:
+            texts[4].classList.add('active'); // FOLLOW ME
+            setTimeout(() => texts[4].classList.remove('active'), 8000);
+            break;
+          case 4:
+            texts[5].classList.add('active'); // BEAUTY
+            setTimeout(() => texts[6].classList.add('active'), 8000); // CHASER
+            setTimeout(() => {
+              texts[5].classList.remove('active');
+              texts[6].classList.remove('active');
+            }, 20000);
+            break;
+        }
+      }
+
       setInterval(() => {
         iframes[current].classList.remove('active');
-        if (texts[current]) texts[current].classList.remove('active');
-
         current = (current + 1) % iframes.length;
-
         iframes[current].classList.add('active');
-        if (texts[current]) {
-          texts[current].classList.add('active');
-          setTimeout(() => {
-            texts[current].classList.remove('active');
-          }, 8000); // show text for first 8 seconds
-        }
-      }, 20000); // rotate every 20 seconds
+        showText(current);
+      }, 20000);
+
+      showText(current); // Initial load
     })();
   </script>
 </body>
