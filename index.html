@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Patrick’s Animated Showcase</title>
   <style>
+    :root {
+      --left-offset: 100px;   /* 🔴 Adjust left text offset here */
+      --right-offset: 100px;  /* 🔴 Adjust right text offset here */
+    }
+
     html, body {
       margin: 0;
       padding: 0;
@@ -52,12 +57,12 @@
     .floating-text {
       position: absolute;
       top: 10%;
-      color: #fff;
+      color: black;
       font-family: 'Arial Black', sans-serif;
       opacity: 0;
       z-index: 5;
-      text-shadow: 0 0 10px #fff, 0 0 20px #0ff, 0 0 30px #0ff;
       letter-spacing: 0.4em;
+      text-shadow: none;
     }
 
     .floating-text.active {
@@ -66,23 +71,23 @@
     }
 
     .floating-text.left {
-      left: 5%;
+      left: var(--left-offset); /* 🔴 Adjust left text offset here */
       transform: rotate(270deg);
       animation: float-left 3s ease-in-out infinite, pulse 2s infinite ease-in-out;
     }
 
     .floating-text.right {
-      right: 5%;
+      right: var(--right-offset); /* 🔴 Adjust right text offset here */
       transform: rotate(90deg);
       animation: float-right 3s ease-in-out infinite, pulse 2s infinite ease-in-out;
     }
 
     .floating-text.big {
-      font-size: 6em;
+      font-size: 3em;
     }
 
     .floating-text:not(.big) {
-      font-size: 3em;
+      font-size: 1.5em;
     }
 
     @keyframes float-left {
@@ -98,24 +103,24 @@
     }
 
     @keyframes pulse {
-      0%   { text-shadow: 0 0 10px #fff, 0 0 20px #0ff; }
-      50%  { text-shadow: 0 0 20px #fff, 0 0 40px #0ff; }
-      100% { text-shadow: 0 0 10px #fff, 0 0 20px #0ff; }
+      0%   { opacity: 1; }
+      50%  { opacity: 0.7; }
+      100% { opacity: 1; }
     }
   </style>
 </head>
 <body>
   <div id="container">
     <!-- Watch Faces -->
-    <iframe class="active" src="https://www.facer.io/w/zs6pDpzmRW/showcase?prev=~2Fwatchface~2Fzs6pDpzmRW&watchModel=fossilqmarshal"></iframe>
-    <iframe src="https://www.facer.io/w/JsydeiEkmy/showcase?prev=~2Fwatchface~2FJsydeiEkmy&watchModel=gw5prodark"></iframe>
-    <iframe src="https://www.facer.io/w/S2Z9tfbuh8/showcase?prev=~2Fwatchface~2FS2Z9tfbuh8&watchModel=fossilqmarshal"></iframe>
-    <iframe src="https://www.facer.io/w/RsnQzFDYgg/showcase?prev=~2Fwatchface~2FRsnQzFDYgg&watchModel=fossilqmarshal"></iframe>
-    <iframe src="https://www.facer.io/w/02SyoSaxx9/showcase?prev=~2Fwatchface~2F02SyoSaxx9&watchModel=zenwatch3"></iframe>
+    <iframe class="active" src="https://www.facer.io/w/zs6pDpzmRW/showcase?watchModel=fossilqmarshal"></iframe>
+    <iframe src="https://www.facer.io/w/JsydeiEkmy/showcase?watchModel=gw5prodark"></iframe>
+    <iframe src="https://www.facer.io/w/S2Z9tfbuh8/showcase?watchModel=fossilqmarshal"></iframe>
+    <iframe src="https://www.facer.io/w/RsnQzFDYgg/showcase?watchModel=fossilqmarshal"></iframe>
+    <iframe src="https://www.facer.io/w/02SyoSaxx9/showcase?watchModel=zenwatch3"></iframe>
 
     <!-- Floating Texts -->
     <div class="floating-text left big">W E L C O M E</div>
-    <div class="floating-text right big">T O   T H I S   W O R L D</div>
+    <div class="floating-text right big">T O     T H I S     W O R L D</div>
     <div class="floating-text left">O F   A N I M A T E D</div>
     <div class="floating-text right big">F A C E S</div>
     <div class="floating-text left big">F O L L O W   M E</div>
@@ -127,10 +132,6 @@
 
   <script>
     (function() {
-      const maskScaleMult = 1.45;
-      const maskOffsetX   = 0;
-      const maskOffsetY   = 0;
-
       const canvas = document.getElementById('canvas'),
             ctx    = canvas.getContext('2d'),
             img    = new Image();
@@ -147,15 +148,11 @@
         if (!img.complete) return;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        let scale = Math.min(
-          canvas.width  / img.width,
-          canvas.height / img.height
-        ) * maskScaleMult;
-
-        const w = img.width  * scale,
+        let scale = Math.min(canvas.width / img.width, canvas.height / img.height) * 1.45;
+        const w = img.width * scale,
               h = img.height * scale,
-              x = (canvas.width  - w) / 2 + maskOffsetX,
-              y = (canvas.height - h) / 2 + maskOffsetY;
+              x = (canvas.width - w) / 2,
+              y = (canvas.height - h) / 2;
 
         ctx.imageSmoothingEnabled = true;
         ctx.drawImage(img, x, y, w, h);
@@ -166,4 +163,56 @@
       resizeCanvas();
 
       const iframes = document.querySelectorAll('iframe');
-      const texts = document.querySelectorAll('.floating-text
+      const texts = document.querySelectorAll('.floating-text');
+      let current = 0;
+
+      function clearText() {
+        texts.forEach(t => t.classList.remove('active'));
+      }
+
+      function showText(index) {
+        clearText();
+        switch (index) {
+          case 0:
+            texts[0].classList.add('active');
+            setTimeout(() => texts[0].classList.remove('active'), 8000);
+            break;
+          case 1:
+            texts[1].classList.add('active');
+            setTimeout(() => texts[1].classList.remove('active'), 8000);
+            break;
+          case 2:
+            texts[2].classList.add('active');
+            texts[3].classList.add('active');
+            setTimeout(() => {
+              texts[2].classList.remove('active');
+              texts[3].classList.remove('active');
+            }, 8000);
+            break;
+          case 3:
+            texts[4].classList.add('active');
+            setTimeout(() => texts[4].classList.remove('active'), 8000);
+            break;
+          case 4:
+            texts[5].classList.add('active');
+            setTimeout(() => texts[6].classList.add('active'), 8000);
+            setTimeout(() => {
+              texts[5].classList.remove('active');
+              texts[6].classList.remove('active');
+            }, 20000);
+            break;
+        }
+      }
+
+      setInterval(() => {
+        iframes[current].classList.remove('active');
+        current = (current + 1) % iframes.length;
+        iframes[current].classList.add('active');
+        showText(current);
+      }, 20000);
+
+      showText(current);
+    })();
+  </script>
+</body>
+</html>
