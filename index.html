@@ -1,103 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Patrick’s Faces & Labels</title>
+  <title>Centered Faces + Offset Labels</title>
   <style>
+    /* full-screen black background, center gallery */
     html, body {
       margin: 0;
       padding: 0;
+      width: 100%; height: 100%;
       background: #000;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      font-family: 'Arial Black', sans-serif;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      font-family: 'Arial Black', sans-serif;
     }
 
+    /* stack each wrapper vertically, centered */
     #gallery {
       display: flex;
-      flex-wrap: wrap;
-      gap: 60px;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      max-width: 90vw;
+      row-gap: 60px;
     }
 
+    /* wrapper matches iframe size, for absolute positioning */
     .face-wrapper {
-      display: flex;
-      align-items: center;
-    }
-
-    /* Text on the left of the iframe */
-    .face-wrapper.left {
-      flex-direction: row;
-    }
-
-    /* Text on the right of the iframe */
-    .face-wrapper.right {
-      flex-direction: row-reverse;
-    }
-
-    .face-frame {
+      position: relative;
       width: 200px;
       height: 200px;
-      border: none;
-      flex-shrink: 0;
     }
 
+    /* the embedded watch face */
+    .face-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* common label rules */
     .label {
-      color: #0ff;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
       font-size: 1.2em;
+      color: #0ff;
       white-space: nowrap;
-      margin: 0 12px;
       text-shadow: 0 0 5px #000;
+    }
+
+    /* all left labels at same X position */
+    .label.left {
+      left: calc(-100% - 50px);  /* 200px face + 50px gap */
+      text-align: right;
+    }
+
+    /* all right labels at same X position */
+    .label.right {
+      right: calc(-100% - 50px); /* 200px face + 50px gap */
+      text-align: left;
     }
   </style>
 </head>
 <body>
+
   <div id="gallery">
 
-    <!-- 1) Left-side labels -->
-    <div class="face-wrapper left">
-      <div class="label">W E L C O M E</div>
-      <iframe class="face-frame"
-              src="https://www.facer.io/w/zs6pDpzmRW/showcase?watchModel=fossilqmarshal">
+    <!-- Face 1 + WELCOME (left) -->
+    <div class="face-wrapper">
+      <iframe
+        class="face-frame"
+        src="https://www.facer.io/w/zs6pDpzmRW/showcase?watchModel=fossilqmarshal">
       </iframe>
+      <div class="label left">WELCOME</div>
     </div>
 
-    <div class="face-wrapper left">
-      <div class="label">O F _ A N I M A T E D</div>
-      <iframe class="face-frame"
-              src="https://www.facer.io/w/JsydeiEkmy/showcase?watchModel=gw5prodark">
+    <!-- Face 2 + TO_THE_WORD (right) -->
+    <div class="face-wrapper">
+      <iframe
+        class="face-frame"
+        src="https://www.facer.io/w/JsydeiEkmy/showcase?watchModel=gw5prodark">
       </iframe>
+      <div class="label right">TO_THE_WORD</div>
     </div>
 
-    <div class="face-wrapper left">
-      <div class="label">F O L L O W _ M E</div>
-      <iframe class="face-frame"
-              src="https://www.facer.io/w/S2Z9tfbuh8/showcase?watchModel=fossilqmarshal">
+    <!-- Face 3 + OF_ANIMATED (left) + FACES (right) -->
+    <div class="face-wrapper">
+      <iframe
+        class="face-frame"
+        src="https://www.facer.io/w/S2Z9tfbuh8/showcase?watchModel=fossilqmarshal">
       </iframe>
+      <div class="label left">OF_ANIMATED</div>
+      <div class="label right">FACES</div>
     </div>
 
-    <div class="face-wrapper left">
-      <div class="label">B E A U T Y</div>
-      <iframe class="face-frame"
-              src="https://www.facer.io/w/RsnQzFDYgg/showcase?watchModel=fossilqmarshal">
+    <!-- Face 4 + FOLLOW_ME (left) -->
+    <div class="face-wrapper">
+      <iframe
+        class="face-frame"
+        src="https://www.facer.io/w/RsnQzFDYgg/showcase?watchModel=fossilqmarshal">
       </iframe>
+      <div class="label left">FOLLOW_ME</div>
     </div>
 
-    <!-- 2) Right-side label -->
-    <div class="face-wrapper right">
-      <div class="label">C H A S E R</div>
-      <iframe class="face-frame"
-              src="https://www.facer.io/w/02SyoSaxx9/showcase?watchModel=zenwatch3">
+    <!-- Face 5 + BEAUTY (left) + CHASER (right) -->
+    <div class="face-wrapper">
+      <iframe
+        class="face-frame"
+        src="https://www.facer.io/w/02SyoSaxx9/showcase?watchModel=zenwatch3">
       </iframe>
+      <div class="label left">BEAUTY</div>
+      <div class="label right">CHASER</div>
     </div>
 
   </div>
+
 </body>
 </html>
